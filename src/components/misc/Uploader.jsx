@@ -91,7 +91,7 @@ export default function ImageUploader({
         disabled={disabled}
       />
 
-      <Button className="cursor-pointer" onClick={handleClick} disabled={disabled}>
+      <Button type="button" className="cursor-pointer" onClick={handleClick} disabled={disabled}>
         {buttonText}
       </Button>
     </div>
