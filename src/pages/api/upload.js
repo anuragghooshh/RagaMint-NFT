@@ -1,5 +1,5 @@
 import { v2 as cloudinary } from "cloudinary";
-import { formidable } from "formidable";
+import formidable from "formidable";
 import fs from "fs";
 
 export const config = {
@@ -19,16 +19,20 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  const form = new formidable.IncomingForm();
-  form.parse(req, async (err, fields, files) => {
-    if (err) {
-      return res.status(500).json({
+  const form = formidable();
+
+  try {
+    const [fields, files] = await form.parse(req);
+
+    const file = files.file?.[0];
+    if (!file) {
+      return res.status(400).json({
         status: false,
-        message: "Internal Server Error",
+        message: "No file uploaded",
       });
     }
 
-    const { path: filePath, name: fileName } = files.file;
+    const { filepath: filePath, originalFilename: fileName } = file;
     const uniqueFilename = `${Date.now()}-${fileName}`;
 
     try {
@@ -47,7 +51,16 @@ export default async function handler(req, res) {
         status: true,
       });
     } catch (error) {
-      return res.status(500).json({ message: "Internal Server Error" });
+      console.error("Cloudinary upload error:", error);
+      return res
+        .status(500)
+        .json({ message: "Internal Server Error during upload" });
     }
-  });
+  } catch (err) {
+    console.error("Form parsing error:", err);
+    return res.status(500).json({
+      status: false,
+      message: "Internal Server Error during form parsing",
+    });
+  }
 }
