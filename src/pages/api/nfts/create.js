@@ -18,26 +18,46 @@ export default async function handler(req, res) {
 
   try {
     const {
-      nftName,
-      nftDescription,
+      name,
+      description,
       url,
-      nftCategory,
-      royalties,
+      category,
       owner,
       transactionHash,
       contractAddress,
-      // tokenID = "",
+      tokenId,
+      externalLink,
     } = req.body;
-    const newNFT = new NFT({
-      nftName,
-      nftDescription,
+
+    console.log("body", {
+      name,
+      description,
       url,
-      nftCategory,
-      royalties,
+      category,
       owner,
       transactionHash,
       contractAddress,
-      // tokenID,
+      tokenId,
+      externalLink,
+    });
+
+    if (!tokenId) {
+      return res.status(400).json({
+        status: false,
+        message: "TokenId is required for NFT creation",
+      });
+    }
+
+    const newNFT = new NFT({
+      name,
+      description,
+      url,
+      category,
+      owner,
+      transactionHash,
+      contractAddress,
+      tokenId,
+      externalLink,
     });
     await newNFT.save();
     res.status(201).json({

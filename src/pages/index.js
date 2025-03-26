@@ -16,6 +16,7 @@ import { useCropImage } from "@/hooks/useCropImage";
 import { uploadImage } from "@/services/api/auth.service";
 import { createNFt } from "@/services/api/nft.service";
 import { mintNFT } from "@/services/blockchain-services/nft";
+import { isValidUrl } from "@/utils/helper";
 import { showErrorMessage, showSuccessMessage } from "@/utils/toast";
 import { LucideTrash } from "lucide-react";
 import Image from "next/image";
@@ -34,9 +35,10 @@ export default function Home() {
   } = useForm();
 
   const onSubmit = async (data) => {
+    console.log(data);
     setMinting(true);
     // const uploadImageRes = await uploadImage(nftImage);
-    const payload = { ...data, imageFile: nftImage };
+    const payload = { ...data, nftImage: nftImage };
 
     const mintRes = await mintNFT(payload);
 
@@ -44,10 +46,11 @@ export default function Home() {
       const createNftRes = await createNFt({
         ...payload,
         owner: mintRes.data?.owner,
-        // tokenId: mintRes.data?.tokenId,
+        tokenId: mintRes.data?.tokenId,
         contractAddress: mintRes.data?.contractAddress,
         transactionHash: mintRes.data?.transactionHash,
         url: mintRes.data?.metadata,
+        externalLink: data.external_url,
       });
       if (createNftRes?.status) {
         console.log(createNftRes.data);
@@ -94,35 +97,55 @@ export default function Home() {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="w-full">
-            <Label htmlFor="nftName">NFT Name</Label>
+            <Label htmlFor="name">NFT Name</Label>
             <Input
-              {...register("nftName", { required: "NFT Name is required" })}
+              {...register("name", { required: "NFT Name is required" })}
               className="mt-2"
-              id="nftName"
+              id="name"
               placeholder="Enter NFT Name"
               disabled={minting}
             />
-            {errors.nftName && (
+            {errors.name && (
+              <p className="text-red-500 text-xs mt-2">{errors.name.message}</p>
+            )}
+          </div>
+
+          <div className="w-full mt-5">
+            <Label htmlFor="description">NFT Description</Label>
+            <Textarea
+              className="mt-2"
+              id="description"
+              placeholder="Enter NFT Description"
+              {...register("description", {
+                required: "NFT Description is required",
+              })}
+              disabled={minting}
+            />
+            {errors.description && (
               <p className="text-red-500 text-xs mt-2">
-                {errors.nftName.message}
+                {errors.description.message}
               </p>
             )}
           </div>
 
           <div className="w-full mt-5">
-            <Label htmlFor="nftDescription">NFT Description</Label>
-            <Textarea
+            <Label htmlFor="description">External Link</Label>
+            <Input
               className="mt-2"
-              id="nftDescription"
-              placeholder="Enter NFT Description"
-              {...register("nftDescription", {
-                required: "NFT Description is required",
+              id="external_url"
+              placeholder="https://example.com"
+              {...register("external_url", {
+                validate: (value) => {
+                  if (!value) return true;
+                  const urlCheck = isValidUrl(value, true);
+                  return urlCheck.valid || urlCheck.error;
+                },
               })}
               disabled={minting}
             />
-            {errors.nftDescription && (
+            {errors.external_url && (
               <p className="text-red-500 text-xs mt-2">
-                {errors.nftDescription.message}
+                {errors.external_url.message}
               </p>
             )}
           </div>
@@ -142,7 +165,7 @@ export default function Home() {
                     onFileInput(file);
                     field.onChange(file);
                   }}
-                  size={500000}
+                  size={5000000}
                   title="Upload Image"
                   disabled={minting}
                 />
@@ -173,10 +196,10 @@ export default function Home() {
           </div>
 
           <div className="w-full mt-5">
-            <Label htmlFor="nftCategory">NFT Category</Label>
+            <Label htmlFor="category">NFT Category</Label>
 
             <Controller
-              name="nftCategory"
+              name="category"
               control={control}
               rules={{ required: "NFT Category is required" }}
               render={({ field }) => (
@@ -204,9 +227,9 @@ export default function Home() {
               )}
             />
 
-            {errors.nftCategory && (
+            {errors.category && (
               <p className="text-red-500 text-xs mt-2">
-                {errors.nftCategory.message}
+                {errors.category.message}
               </p>
             )}
           </div>

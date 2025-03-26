@@ -1,16 +1,16 @@
 import mongoose from "mongoose";
 
 const NFTSchema = new mongoose.Schema({
-  nftName: {
+  name: {
     type: String,
     required: true,
     maxlength: 100,
   },
-  // tokenID: {
-  //   type: String,
-  //   required: false,
-  //   unique: true,
-  // },
+  tokenId: {
+    type: String,
+    required: true,
+    index: true
+  },
   contractAddress: {
     type: String,
     required: true,
@@ -19,16 +19,22 @@ const NFTSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  nftDescription: String,
+  description: {
+    type: String,
+    required: true,
+  },
+  externalLink: {
+    type: String,
+    required: false,
+  },
   url: {
     type: String,
     required: true,
   },
-  nftCategory: {
+  category: {
     type: String,
     required: true,
   },
-  royalties: Number,
   owner: String,
   createdAt: { type: Date, default: Date.now },
 });
