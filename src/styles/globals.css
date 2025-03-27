@@ -5,6 +5,9 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  --font-inter: "Inter", sans-serif;
+  --font-syncopate: "Syncopate", sans-serif;
+
   --background: #ffffff;
   --foreground: #171717;
   --radius: 0.625rem;
@@ -77,6 +80,9 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  --font-syncopate: var(--font-syncopate);
+  --font-inter: var(--font-inter);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -89,7 +95,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter);
 }
 
 .dark {

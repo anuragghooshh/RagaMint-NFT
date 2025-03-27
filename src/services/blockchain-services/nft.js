@@ -102,9 +102,10 @@ export const mintNFT = async (metadata) => {
     console.log("Connected Account:", accounts[0]);
 
     let metadataURI;
+    let imageHash;
     if (metadata.nftImage) {
       console.log("Uploading image to IPFS...");
-      const imageHash = await uploadImageToIPFS(metadata.nftImage);
+      imageHash = await uploadImageToIPFS(metadata.nftImage);
 
       console.log("Uploading metadata to IPFS...");
       const metadataHash = await uploadMetadataToIPFS(metadata, imageHash);
@@ -164,6 +165,7 @@ export const mintNFT = async (metadata) => {
         contractAddress,
         tokenId,
         metadata: metadataURI || metadata.url,
+        imageHash,
         nftDetails: {
           name: metadata.name,
           description: metadata.description,

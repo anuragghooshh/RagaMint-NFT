@@ -8,6 +8,7 @@ import useMetamaskStore from "@/store/metaMaskStore";
 import { getMethod } from "@/services/metamask-services/cookies";
 import React from "react";
 import { showErrorMessage } from "@/utils/toast";
+import { UserProvider } from "@/context/UserContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -49,19 +50,21 @@ export default function App({ Component, pageProps }) {
       <main
         className={`${inter.variable} ${syncopate.variable} relative max-w-[1920px] mx-auto`}
       >
-        <Component {...pageProps} />
-        <ToastContainer
-          position="bottom-right"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={true}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-        />
+        <UserProvider>
+          <Component {...pageProps} />
+          <ToastContainer
+            position="bottom-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={true}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+          />
+        </UserProvider>
       </main>
     </>
   );
