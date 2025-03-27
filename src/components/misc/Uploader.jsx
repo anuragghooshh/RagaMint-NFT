@@ -33,7 +33,7 @@ export default function ImageUploader({
 
   const handleClick = () => {
     if (inputRef.current) {
-      inputRef.current.value = null; // Reset the input
+      inputRef.current.value = null;
       inputRef.current.click();
     }
   };
@@ -91,7 +91,7 @@ export default function ImageUploader({
         disabled={disabled}
       />
 
-      <Button type="button" className="cursor-pointer" onClick={handleClick} disabled={disabled}>
+      <Button type="button" className="cursor-pointer flex items-center gap-1 bg-white/20 hover:bg-white/10 border border-gray-700" onClick={handleClick} disabled={disabled}>
         {buttonText}
       </Button>
     </div>

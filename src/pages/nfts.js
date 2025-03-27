@@ -43,7 +43,7 @@ export default function MyNFTs() {
               My <span className="font-bold">Collection</span>
             </h1>
             <Link href="/">
-              <Button size="sm" className="flex items-center gap-1">
+              <Button size="lg" className="cursor-pointer flex items-center gap-1 bg-white/20 hover:bg-white/10 border border-gray-700">
                 <Plus size={16} />
                 Create
               </Button>

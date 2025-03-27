@@ -18,12 +18,16 @@ export default function Navbar() {
   const isActive = (path) => router.pathname === path;
 
   return (
-    <header className="sticky top-0 z-50 w-full px-3 py-3">
+    <header className="sticky top-0 z-50 w-full py-3">
       <div className="w-full rounded-2xl backdrop-blur-lg bg-gray-900/70 border border-gray-800">
         <div className="container mx-auto px-6">
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="flex items-center space-x-2">
+            <Link
+              title={`RagaMint - "Raga" is derived from "Anurag" which means love, and "Mint" here refers to minting NFTs. When combined, RagaMint means creating NFTs with love and passion.`}
+              href="/"
+              className="flex items-center space-x-2"
+            >
               <h2 className="cursor-pointer text-2xl font-syncopate font-extralight bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-500">
                 Raga<span className="font-bold">Mint</span>
               </h2>
@@ -33,9 +37,9 @@ export default function Navbar() {
             <nav className="hidden md:flex items-center space-x-4">
               <Link
                 href="/"
-                className={`px-4 py-2 rounded-md text-base font-medium transition duration-300 ${
+                className={`px-4 py-2 rounded-md text-base font-medium transition duration-300 relative ${
                   isActive("/")
-                    ? "bg-purple-700/20 text-purple-300"
+                    ? "text-violet-400 after:transition-all after:duration-200 after:ease-in-out hover:after:-translate-x-1 after:size-2 after:bg-violet-400 after:absolute after:rounded-full after:right-0 after:top-1/2 after:-translate-y-1/2 "
                     : "text-gray-300 hover:bg-gray-800 hover:text-white"
                 }`}
               >
@@ -47,9 +51,9 @@ export default function Navbar() {
 
               <Link
                 href="/nfts"
-                className={`px-4 py-2 rounded-md text-base font-medium transition duration-300 ${
+                className={`px-4 py-2 rounded-md text-base font-medium transition duration-300 relative ${
                   isActive("/nfts")
-                    ? "bg-purple-700/20 text-purple-300"
+                    ? "text-violet-400 after:transition-all after:duration-200 after:ease-in-out hover:after:-translate-x-1 after:size-2 after:bg-violet-400 after:absolute after:rounded-full after:right-0 after:top-1/2 after:-translate-y-1/2 "
                     : "text-gray-300 hover:bg-gray-800 hover:text-white"
                 }`}
               >
@@ -62,8 +66,12 @@ export default function Navbar() {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={logOut}
-                className="text-gray-300 hover:text-white transition duration-300"
+                title="Logout"
+                onClick={()=>{
+                  logOut();
+                  router.push("/");
+                }}
+                className="cursor-pointer text-gray-300 hover:bg-gray-800 hover:text-white transition duration-300"
               >
                 <LogOut size={18} className="mr-1" />
                 Logout
@@ -72,7 +80,6 @@ export default function Navbar() {
 
             {/* Mobile Menu Button */}
             <div className="flex md:hidden items-center">
-              <ConnectMetamaskWallet />
               <Button
                 variant="ghost"
                 size="sm"

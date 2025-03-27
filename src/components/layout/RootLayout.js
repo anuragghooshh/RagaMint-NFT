@@ -1,11 +1,13 @@
 import React from "react";
 import Navbar from "../navbar/Navbar";
+import ConnectMetamaskWallet from "../auth/ConnectMetamaskWallet";
 
 const RootLayout = ({ children }) => {
   return (
-    <div className="w-full">
-      <div className="w-full mx-auto relative">
+    <div className="w-full px-5">
+      <div className="container w-full mx-auto relative  pt-2 md:pt-3 lg:pt-5">
         <Navbar />
+        <ConnectMetamaskWallet />
         <div className="w-full relative z-20">{children}</div>
         <div className="w-full fixed min-h-screen top-0 left-0 z-10 overflow-hidden">
           <div className="relative w-full h-full">

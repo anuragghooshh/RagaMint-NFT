@@ -33,31 +33,16 @@ const ConnectMetamaskWallet = ({ postAction }) => {
   };
 
   return (
-    <button
-      disabled={signer}
-      type="button"
-      title={signer ? "Connected" : "Connect with Metamask Wallet"}
-      onClick={connect}
-      className={`flex items-center gap-3 justify-between p-2 rounded-xl text-base font-bold cursor-pointer ${
-        signer
-          ? "bg-green-500 text-gray-800"
-          : "bg-gray-700 text-white"
-      }`}
-    >
-      <div className="flex items-center gap-[10px]">
-        <div
-          className={`min-w-[33px] h-[33px] grid place-items-center bg-[#DBD4CD] rounded-lg`}
-        >
-          <Metamask />
-        </div>
-        {signer ? "Connected" : "Metamask"}
+    <div className="h-fit flex items-center fixed bottom-2 md:top-36 right-0 translate-x-[calc(100%-48px)] hover:translate-x-0 transition-all duration-300 ease-in-out z-50">
+      <div className={`size-10 min-w-10 rounded-full grid place-items-center ${signer ? 'bg-green-500' : 'bg-gray-800'}`}>
+        <Metamask />
       </div>
-      <div
-        className={`min-w-[33px] h-[33px] grid place-items-center rounded-lg bg-gray-800`}
-      >
-        {signer ? <Tick /> : <Connect />}
-      </div>
-    </button>
+      <div className={` size-4 rounded-full ${signer ? 'bg-green-500' : 'bg-gray-800'}`} />
+      <button disabled={signer} type="button" title={signer ? 'Connected' : 'Connect with Metamask Wallet'} onClick={connect} className={`flex items-center gap-3 justify-between p-2 px-3 rounded-l-xl text-paragraph-15 font-inter_tight font-bold ${signer ? 'bg-green-500 text-white cursor-not-allowed' : 'bg-gray-800 text-white cursor-pointer'}`}>
+        <div className="flex items-center gap-[10px]">{signer ? 'Connected' : 'Metamask'}</div>
+        <div className={`min-w-[33px] h-[33px] grid place-items-center rounded-lg bg-grafity-middle-2`}>{signer ? <Tick /> : <Connect />}</div>
+      </button>
+    </div>
   );
 };
 

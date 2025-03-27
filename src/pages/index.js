@@ -74,7 +74,6 @@ export default function Home() {
         });
         if (createNftRes?.status) {
           console.log(createNftRes.data);
-          showSuccessMessage("NFT created successfully!");
         }
       } else {
         showErrorMessage(mintRes?.message);
@@ -108,14 +107,12 @@ export default function Home() {
   return (
     <RootLayout>
       <>
-        <ConnectMetamaskWallet />
-
-        <div className="container mx-auto px-4 py-8">
+        <div className="mx-auto py-8">
           <div className="lg:grid lg:grid-cols-2 lg:gap-8">
             {/* NFT Preview Card */}
             <div className="mb-8 lg:mb-0 lg:max-w-md">
               {/* <h2
-                title={`RagaMint - "Raga" is derived from "Anurag" which means love, and "Mint" here refers to minting NFTs. When combined, RagaMint means creating NFTs with love and passion.`}
+                
                 className="cursor-help text-3xl sm:text-4xl font-extralight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-500"
               >
                 Raga<span className="font-bold">Mint</span>
@@ -188,7 +185,6 @@ export default function Home() {
                               size={5000000}
                               title="Upload"
                               disabled={minting}
-                              className="w-full"
                             />
                           )}
                         />
@@ -394,7 +390,7 @@ export default function Home() {
                       size="lg"
                       type="submit"
                       title="Deploy NFT"
-                      className="w-full mt-6 text-white cursor-pointer bg-violet-950 hover:bg-violet-900 transition-colors"
+                      className="w-full mt-6 text-white cursor-pointer bg-violet-400/20 hover:bg-violet-400/70 border border-violet-400/50"
                     >
                       {minting ? (
                         <>
