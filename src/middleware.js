@@ -25,5 +25,5 @@ export default function middleware(req) {
 }
 
 export const config = {
-  matcher: ["/", "/login"],
+  matcher: ["/", "/login", "/nfts"],
 };

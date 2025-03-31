@@ -83,6 +83,8 @@
 
   --font-syncopate: var(--font-syncopate);
   --font-inter: var(--font-inter);
+
+  --animate-scan-down: "scan-down 2s ease-in-out infinite";
 }
 
 @media (prefers-color-scheme: dark) {
@@ -90,6 +92,91 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+}
+
+/* Scan down animation for buttons */
+@keyframes scan-down {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+  50% {
+    top: 50%;
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+/* Animation for floating elements */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-30px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Animation for slow pulsing */
+@keyframes pulse-slow {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* Animation for slower pulsing */
+@keyframes pulse-slower {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* Apply the animations */
+.scan-line {
+  animation: scan-down 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 15s ease infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-pulse-slower {
+  animation: pulse-slower 10s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Make scan animation pause when not hovered */
+.group:not(:hover) .scan-line {
+  animation-play-state: paused;
+}
+
+/* CRT scan lines background */
+.bg-scan-lines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 1px,
+    rgba(0, 0, 0, 0.2) 1px,
+    rgba(0, 0, 0, 0.2) 2px
+  );
+  background-size: 100% 2px;
 }
 
 body {

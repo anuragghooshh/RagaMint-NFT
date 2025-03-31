@@ -6,6 +6,7 @@ import { Loader2, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import RootLayout from "@/components/layout/RootLayout";
 import NFTCard from "@/components/cards/NFTCard";
+import { GradientButton } from "@/components/buttons/GradientButton";
 
 export default function MyNFTs() {
   const [nfts, setNfts] = useState([]);
@@ -43,7 +44,10 @@ export default function MyNFTs() {
               My <span className="font-bold">Collection</span>
             </h1>
             <Link href="/">
-              <Button size="lg" className="cursor-pointer flex items-center gap-1 bg-white/20 hover:bg-white/10 border border-gray-700">
+              <Button
+                size="lg"
+                className="cursor-pointer flex items-center gap-1 bg-white/20 hover:bg-white/10 border border-gray-700"
+              >
                 <Plus size={16} />
                 Create
               </Button>
@@ -57,25 +61,38 @@ export default function MyNFTs() {
               <p className="text-gray-400">Loading your NFTs...</p>
             </div>
           ) : nfts.length === 0 ? (
-            <div className="rounded-xl overflow-hidden shadow-2xl transition-all border border-gray-700 hover:border-purple-500/50 bg-gray-800/50 p-8 text-center my-8">
-              <div className="mb-6">
-                <div className="w-20 h-20 mx-auto rounded-full bg-gray-700/50 flex items-center justify-center mb-4">
-                  <Plus size={32} className="text-gray-400" />
+            <div className="rounded-xl overflow-hidden border border-gray-800 hover:border-purple-500/30 bg-gray-900/60 backdrop-blur-lg shadow-2xl transition-all duration-300 p-10 text-center my-12 max-w-md mx-auto">
+              <div className="mb-8">
+                {/* Animated icon container */}
+                <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center mb-6 p-1 group hover:scale-105 transition-all duration-300">
+                  <div className="w-full h-full rounded-full bg-gray-900 flex items-center justify-center">
+                    <Plus
+                      size={32}
+                      className="text-purple-400 group-hover:rotate-90 transition-transform duration-500 ease-out"
+                    />
+                  </div>
                 </div>
-                <h2 className="text-xl font-semibold mb-2">No NFTs Found</h2>
-                <p className="text-gray-400">
-                  You haven't minted any NFTs yet.
+
+                {/* Text content with gradient title */}
+                <h2 className="text-2xl font-light mb-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
+                  Your Collection is <span className="font-bold">Empty</span>
+                </h2>
+                <p className="text-gray-400 max-w-xs mx-auto mb-2">
+                  You haven't minted any NFTs yet. Create your first digital
+                  masterpiece.
                 </p>
               </div>
-              <Link
-                href="/"
-                className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-6 py-3 rounded-lg font-medium transition"
-              >
-                Create Your First NFT
+
+              {/* Styled button with hover effects */}
+              <Link href="/">
+                <GradientButton size="xl" className="w-full px-8 py-3.5">
+                  <Plus size={18} className="mr-2" />
+                  Create Your First NFT
+                </GradientButton>
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {nfts.map((nft) => (
                 <NFTCard key={nft._id} nft={nft} />
               ))}

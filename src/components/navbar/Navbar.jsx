@@ -37,7 +37,7 @@ export default function Navbar() {
             <nav className="hidden md:flex items-center space-x-4">
               <Link
                 href="/"
-                className={`px-4 py-2 rounded-md text-base font-medium transition duration-300 relative ${
+                className={`px-4 py-2 rounded-md font-light uppercase text-sm tracking-wider  transition duration-300 relative ${
                   isActive("/")
                     ? "text-violet-400 after:transition-all after:duration-200 after:ease-in-out hover:after:-translate-x-1 after:size-2 after:bg-violet-400 after:absolute after:rounded-full after:right-0 after:top-1/2 after:-translate-y-1/2 "
                     : "text-gray-300 hover:bg-gray-800 hover:text-white"
@@ -51,7 +51,7 @@ export default function Navbar() {
 
               <Link
                 href="/nfts"
-                className={`px-4 py-2 rounded-md text-base font-medium transition duration-300 relative ${
+                className={`px-4 py-2 rounded-md font-light uppercase text-sm tracking-wider  transition duration-300 relative ${
                   isActive("/nfts")
                     ? "text-violet-400 after:transition-all after:duration-200 after:ease-in-out hover:after:-translate-x-1 after:size-2 after:bg-violet-400 after:absolute after:rounded-full after:right-0 after:top-1/2 after:-translate-y-1/2 "
                     : "text-gray-300 hover:bg-gray-800 hover:text-white"
@@ -102,7 +102,7 @@ export default function Navbar() {
             <div className="container mx-auto px-4 py-3 space-y-2">
               <Link
                 href="/"
-                className={`block px-4 py-2 rounded-md text-base font-medium transition duration-300 ${
+                className={`block px-4 py-2 rounded-md font-light uppercase text-sm tracking-wider  transition duration-300 ${
                   isActive("/")
                     ? "bg-purple-700/20 text-purple-300"
                     : "text-gray-300 hover:bg-gray-800 hover:text-white"
@@ -116,7 +116,7 @@ export default function Navbar() {
 
               <Link
                 href="/nfts"
-                className={`block px-4 py-2 rounded-md text-base font-medium transition duration-300 ${
+                className={`block px-4 py-2 rounded-md font-light uppercase text-sm tracking-wider  transition duration-300 ${
                   isActive("/nfts")
                     ? "bg-purple-700/20 text-purple-300"
                     : "text-gray-300 hover:bg-gray-800 hover:text-white"
@@ -130,7 +130,7 @@ export default function Navbar() {
 
               <button
                 onClick={logOut}
-                className="w-full text-left block px-4 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition duration-300"
+                className="w-full text-left block px-4 py-2 rounded-md text-base font-light uppercase text-sm tracking-wider text-gray-300 hover:bg-gray-800 hover:text-white transition duration-300"
               >
                 <span className="flex items-center gap-2">
                   <LogOut size={18} />

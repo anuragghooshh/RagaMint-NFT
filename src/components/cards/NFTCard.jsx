@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const NFTCard = ({ nft }) => {
   return (
-    <div className="group rounded-xl overflow-hidden shadow-lg transition transform hover:scale-105 hover:shadow-2xl border border-gray-700 bg-gray-800/50 flex flex-col h-full">
+    <div className="group rounded-xl overflow-hidden shadow-lg backdrop-blur-sm border border-gray-700 bg-gray-800/50 flex flex-col h-full">
       <div className="relative w-full aspect-square overflow-hidden">
         <Image
           src={

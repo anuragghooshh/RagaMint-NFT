@@ -1,4 +1,5 @@
 import ConnectMetamaskWallet from "@/components/auth/ConnectMetamaskWallet";
+import { GradientButton } from "@/components/buttons/GradientButton";
 import RootLayout from "@/components/layout/RootLayout";
 import CropperUploader from "@/components/misc/CropperUploader";
 import ImageUploader from "@/components/misc/Uploader";
@@ -159,7 +160,7 @@ export default function Home() {
             <div>
               <div className="bg-gray-900/60 backdrop-blur-lg border border-gray-800 rounded-xl p-6 shadow-lg">
                 <h1 className="text-xl font-syncopate sm:text-2xl tracking-tight font-light mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-                  Create your<span className="font-bold"> NFT</span>
+                  Add your <span className="font-bold">Metadata</span>
                 </h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="space-y-6">
@@ -385,12 +386,12 @@ export default function Home() {
                     </div>
 
                     {/* Submit Button */}
-                    <Button
+                    <GradientButton
                       disabled={minting}
                       size="lg"
                       type="submit"
                       title="Deploy NFT"
-                      className="w-full mt-6 text-white cursor-pointer bg-violet-400/20 hover:bg-violet-400/70 border border-violet-400/50"
+                      className="w-full"
                     >
                       {minting ? (
                         <>
@@ -403,7 +404,7 @@ export default function Home() {
                           Deploy NFT
                         </>
                       )}
-                    </Button>
+                    </GradientButton>
                   </div>
                 </form>
               </div>
