@@ -56,14 +56,31 @@ export default function MyNFTs() {
 
           {/* Content */}
           {loading ? (
-            <div className="flex flex-col justify-center items-center h-[60vh]">
-              <Loader2 className="h-10 w-10 animate-spin text-blue-500 mb-4" />
-              <p className="text-gray-400">Loading your NFTs...</p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {[...Array(8)].map((_, index) => (
+                <div
+                  key={index}
+                  className="rounded-xl overflow-hidden backdrop-blur-2xl border border-gray-800 bg-gray-900/60 shadow-lg animate-pulse"
+                >
+                  <div className="aspect-square w-full bg-gray-800"></div>
+
+                  <div className="p-4 space-y-3">
+                    <div className="h-5 bg-gray-800 rounded w-3/4"></div>
+
+                    {/* Description placeholder */}
+                    <div className="h-4 bg-gray-800 rounded w-full"></div>
+                    <div className="h-4 bg-gray-800 rounded w-2/3"></div>
+
+                    <div className="flex">
+                      <div className="h-5 bg-gray-800 rounded w-1/3 mt-2"></div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           ) : nfts.length === 0 ? (
             <div className="rounded-xl overflow-hidden border border-gray-800 hover:border-purple-500/30 bg-gray-900/60 backdrop-blur-lg shadow-2xl transition-all duration-300 p-10 text-center my-12 max-w-md mx-auto">
               <div className="mb-8">
-                {/* Animated icon container */}
                 <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center mb-6 p-1 group hover:scale-105 transition-all duration-300">
                   <div className="w-full h-full rounded-full bg-gray-900 flex items-center justify-center">
                     <Plus
@@ -73,7 +90,6 @@ export default function MyNFTs() {
                   </div>
                 </div>
 
-                {/* Text content with gradient title */}
                 <h2 className="text-2xl font-light mb-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
                   Your Collection is <span className="font-bold">Empty</span>
                 </h2>
@@ -83,7 +99,6 @@ export default function MyNFTs() {
                 </p>
               </div>
 
-              {/* Styled button with hover effects */}
               <Link href="/">
                 <GradientButton size="xl" className="w-full px-8 py-3.5">
                   <Plus size={18} className="mr-2" />

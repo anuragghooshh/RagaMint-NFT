@@ -1,10 +1,11 @@
 import React from "react";
 import Navbar from "../navbar/Navbar";
 import ConnectMetamaskWallet from "../auth/ConnectMetamaskWallet";
+import Footer from "../footer/Footer";
 
 const RootLayout = ({ children }) => {
   return (
-    <div className="w-full min-h-screen px-5 relative overflow-hidden bg-gray-950">
+    <div className="w-full min-h-screen relative overflow-hidden bg-gray-950">
       {/* Cyber grid background */}
       <div className="fixed inset-0 z-0 opacity-30">
         <div 
@@ -43,7 +44,7 @@ const RootLayout = ({ children }) => {
         </div>
       </div>
 
-      <div className="container w-full mx-auto relative pt-2 md:pt-3 lg:pt-5 z-20">
+      <div className="container w-full mx-auto relative pt-2 md:pt-3 lg:pt-5 z-20 px-5">
         <Navbar />
         <ConnectMetamaskWallet />
 
@@ -51,6 +52,7 @@ const RootLayout = ({ children }) => {
           {children}
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

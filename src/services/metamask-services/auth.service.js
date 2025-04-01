@@ -7,10 +7,16 @@ export const connectMetamaskWallet = async () => {
       /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(
         navigator.userAgent.toLowerCase()
       );
-    const errorMessage = isMobile
-      ? "Use Metamask's in-app browser or desktop extension."
-      : "Install MetaMask extension first.";
-    throw new Error(errorMessage);
+    if (!isMobile) {
+      window.location.href = "https://metamask.io/en-GB/download";
+      return new Promise(() => {});
+    } else {
+      throw new Error("Use Metamask's in-app browser or desktop extension.");
+    }
+    // const errorMessage = isMobile
+    //   ? ""
+    //   : "Install MetaMask extension first.";
+    // throw new Error(errorMessage);
   }
 
   try {
