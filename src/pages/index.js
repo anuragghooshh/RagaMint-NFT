@@ -3,6 +3,7 @@ import { GradientButton } from "@/components/buttons/GradientButton";
 import RootLayout from "@/components/layout/RootLayout";
 import CropperUploader from "@/components/misc/CropperUploader";
 import ImageUploader from "@/components/misc/Uploader";
+import WalletInfo from "@/components/misc/WalletInfo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -25,13 +26,18 @@ import { isValidUrl } from "@/utils/helper";
 import { showErrorMessage, showSuccessMessage } from "@/utils/toast";
 import { LucideTrash, Sparkles, Loader2, Link, Info } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 export default function Home() {
   const [nftImage, setNftImage] = useState(null);
   const [minting, setMinting] = useState(false);
+  const [isWalletConnected, setIsWalletConnected] = useState(false);
   const { signer } = useMetamaskStore();
+
+  useEffect(() => {
+    setIsWalletConnected(!!signer);
+  }, [signer]);
 
   const {
     register,
@@ -102,7 +108,12 @@ export default function Home() {
       setNftImage(null);
       return;
     }
-    handleSelectFile(file);
+
+    if (file.type === "image/gif") {
+      setNftImage(file);
+    } else {
+      handleSelectFile(file);
+    }
   };
 
   return (
@@ -162,6 +173,7 @@ export default function Home() {
                 <h1 className="text-xl font-syncopate sm:text-2xl tracking-tight font-light mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
                   Add your <span className="font-bold">Metadata</span>
                 </h1>
+                {isWalletConnected && <WalletInfo />}
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="space-y-6">
                     {/* NFT Image Upload */}
@@ -183,6 +195,13 @@ export default function Home() {
                                 onFileInput(file);
                                 field.onChange(file);
                               }}
+                              accept={[
+                                ".png",
+                                ".jpeg",
+                                ".jpg",
+                                ".gif",
+                                ".webp",
+                              ]}
                               size={5000000}
                               title="Upload"
                               disabled={minting}
