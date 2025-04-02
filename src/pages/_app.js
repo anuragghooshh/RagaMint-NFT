@@ -46,6 +46,25 @@ export default function App({ Component, pageProps }) {
     <>
       <Head>
         <title>RagaMint</title>
+        <meta
+          name="description"
+          content="Create, deploy, and overlook NFTs with ease on RagaMint. Made with ❤️ by Anurag Ghosh."
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel="icon" href="/favicon.png" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://ragamint-web.vercel.app/" />
+        <meta
+          property="og:title"
+          content="RagaMint | NFT Deployment Platform"
+        />
+        <meta
+          property="og:description"
+          content="Create, deploy, and overlook NFTs with ease on RagaMint. Made with ❤️ by Anurag Ghosh."
+        />
+        <meta property="og:image" content="/og.png" />
       </Head>
       <main
         className={`${inter.variable} ${syncopate.variable} relative max-w-[1920px] mx-auto`}
