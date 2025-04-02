@@ -52,7 +52,7 @@ async function uploadMetadataToIPFS(nftData, imageIpfsHash) {
     ],
   };
 
-  console.log("Creating metadata with:", metadataJSON);  // Add logging to debug
+  console.log("Creating metadata with:", metadataJSON); // Add logging to debug
 
   const body = {
     pinataContent: metadataJSON,
@@ -175,14 +175,12 @@ export const mintNFT = async (metadata) => {
       },
     };
   } catch (error) {
-    console.error("Error minting NFT:", error);
     return {
       status: false,
       message:
         error.code === "ACTION_REJECTED"
           ? "Transaction rejected"
           : metamaskErrorFinder(error.error, "Failed to mint NFT"),
-      error,
     };
   }
 };

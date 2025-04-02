@@ -55,7 +55,7 @@ export default function Home() {
     try {
       await connectMetamaskWallet();
     } catch (error) {
-      showErrorMessage(error.message);
+      showErrorMessage(error.message || "Failed to connect wallet");
       return;
     }
 
@@ -64,32 +64,28 @@ export default function Home() {
     // const uploadImageRes = await uploadImage(nftImage);
     const payload = { ...data, nftImage: nftImage };
 
-    try {
-      const mintRes = await mintNFT(payload);
-      const user = getUser();
-      if (mintRes?.status) {
-        const createNftRes = await createNFt({
-          ...payload,
-          owner: mintRes.data?.owner,
-          tokenId: mintRes.data?.tokenId,
-          contractAddress: mintRes.data?.contractAddress,
-          transactionHash: mintRes.data?.transactionHash,
-          url: mintRes.data?.metadata,
-          externalLink: data.external_url,
-          imageHash: mintRes.data?.imageHash,
-          userId: user?.uid,
-        });
-        if (createNftRes?.status) {
-          console.log(createNftRes.data);
-        }
-      } else {
-        showErrorMessage(mintRes?.message);
+    const mintRes = await mintNFT(payload);
+    const user = getUser();
+    if (mintRes?.status) {
+      const createNftRes = await createNFt({
+        ...payload,
+        owner: mintRes.data?.owner,
+        tokenId: mintRes.data?.tokenId,
+        contractAddress: mintRes.data?.contractAddress,
+        transactionHash: mintRes.data?.transactionHash,
+        url: mintRes.data?.metadata,
+        externalLink: data.external_url,
+        imageHash: mintRes.data?.imageHash,
+        userId: user?.uid,
+      });
+      if (createNftRes?.status) {
+        console.log(createNftRes.data);
       }
-    } catch (error) {
-      showErrorMessage("Error creating NFT");
-    } finally {
-      setMinting(false);
+    } else {
+      showErrorMessage(mintRes?.message);
     }
+
+    setMinting(false);
   };
 
   const {

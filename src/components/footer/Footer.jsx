@@ -1,5 +1,5 @@
 import React from "react";
-import { Github, Code, Mail, Linkedin } from "lucide-react";
+import { Github, Code, Mail, Linkedin, HeartIcon } from "lucide-react";
 import Link from "next/link";
 
 const Footer = () => {
@@ -111,10 +111,19 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-10 pt-5 border-t border-gray-800 flex flex-col md:flex-row items-center">
+        <div className="mt-10 pt-5 border-t border-gray-800 flex justify-between flex-col md:flex-row items-center">
           <div className="text-gray-400 text-sm mb-3 md:mb-0">
             © {currentYear} RagaMint. All rights reserved.
           </div>
+
+          <p className="text-gray-400 font-syncopate text-xs flex items-center gap-2">
+            {" "}
+            Made with{" "}
+            <span>
+              <HeartIcon size={14} className="text-red-500" />
+            </span>{" "}
+            by Anurag Ghosh{" "}
+          </p>
         </div>
       </div>
 

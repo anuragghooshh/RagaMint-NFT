@@ -43,11 +43,9 @@ const RootLayout = ({ children }) => {
           <div className="h-[1px] w-screen bg-gradient-to-r from-transparent via-blue-500/50 to-transparent absolute bottom-20 left-0" />
         </div>
       </div>
-
+      <ConnectMetamaskWallet />
       <div className="container w-full mx-auto relative pt-2 md:pt-3 lg:pt-5 z-20 px-5">
         <Navbar />
-        <ConnectMetamaskWallet />
-
         <div className="w-full relative z-20">
           {children}
         </div>

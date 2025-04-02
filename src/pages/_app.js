@@ -31,10 +31,10 @@ export default function App({ Component, pageProps }) {
     const method = getMethod();
 
     if (!signer && method?.value === "metamask") {
-      connectMetamaskWallet() // Returns Signer
+      connectMetamaskWallet()
         .then((signer) => {
           console.log(signer);
-          if (signer) setWalletAddress(signer); // Set Signer State
+          if (signer) setWalletAddress(signer);
         })
         .catch((e) => {
           showErrorMessage(e.message);

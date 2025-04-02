@@ -8,7 +8,7 @@ import {
   getToken,
 } from "@/services/firebase-services/cookies";
 import { showSuccessMessage, showErrorMessage } from "@/utils/toast";
-import { Sparkles, Loader2, Loader } from "lucide-react";
+import { Sparkles, Loader2, Loader, HeartIcon } from "lucide-react";
 
 const GoogleIcon = () => {
   return (
@@ -118,6 +118,14 @@ export default function Login() {
                 </>
               )}
             </Button>
+            <p className="text-gray-400 w-fit font-syncopate text-xs flex items-center gap-2 mx-auto ">
+              {" "}
+              Made with{" "}
+              <span>
+                <HeartIcon size={14} className="text-red-500" />
+              </span>{" "}
+              by Anurag Ghosh{" "}
+            </p>
           </div>
         </div>
       </div>
