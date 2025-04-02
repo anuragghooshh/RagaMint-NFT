@@ -67,9 +67,11 @@ export default function Navbar() {
                 variant="ghost"
                 size="sm"
                 title="Logout"
-                onClick={()=>{
-                  logOut();
-                  router.push("/");
+                onClick={async () => {
+                  const res = await logOut();
+                  if (res.status) {
+                    router.push("/");
+                  }
                 }}
                 className="cursor-pointer text-gray-300 hover:bg-gray-800 hover:text-white transition duration-300"
               >
@@ -84,7 +86,7 @@ export default function Navbar() {
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsOpen(!isOpen)}
-                className="ml-3 text-gray-300 hover:text-white transition duration-300"
+                className="ml-3 cursor-pointer text-gray-300 hover:text-white transition duration-300"
               >
                 {isOpen ? (
                   <X className="h-6 w-6" />
@@ -98,45 +100,52 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden border-t border-gray-800">
-            <div className="container mx-auto px-4 py-3 space-y-2">
+          <div className="md:hidden border-t border-gray-800 animate-fadeIn">
+            <div className="container mx-auto px-4 py-4 space-y-3">
               <Link
                 href="/"
-                className={`block px-4 py-2 rounded-md font-light uppercase text-sm tracking-wider  transition duration-300 ${
+                className={`block px-4 py-3 rounded-md font-light uppercase text-sm tracking-wider transition duration-300 relative ${
                   isActive("/")
-                    ? "bg-purple-700/20 text-purple-300"
-                    : "text-gray-300 hover:bg-gray-800 hover:text-white"
+                    ? "text-violet-400 bg-violet-500/10 after:absolute after:left-0 after:top-1/2 after:-translate-y-1/2 after:h-1/2 after:w-0.5 after:bg-violet-400 after:rounded-r-full"
+                    : "text-gray-300 hover:bg-gray-800/40 hover:text-white"
                 }`}
               >
-                <span className="flex items-center gap-2">
-                  <Sparkles size={18} />
+                <span className="flex items-center gap-3">
+                  <Sparkles size={18} className="text-violet-400" />
                   Create NFT
                 </span>
               </Link>
 
               <Link
                 href="/nfts"
-                className={`block px-4 py-2 rounded-md font-light uppercase text-sm tracking-wider  transition duration-300 ${
+                className={`block px-4 py-3 rounded-md font-light uppercase text-sm tracking-wider transition duration-300 relative ${
                   isActive("/nfts")
-                    ? "bg-purple-700/20 text-purple-300"
-                    : "text-gray-300 hover:bg-gray-800 hover:text-white"
+                    ? "text-violet-400 bg-violet-500/10 after:absolute after:left-0 after:top-1/2 after:-translate-y-1/2 after:h-1/2 after:w-0.5 after:bg-violet-400 after:rounded-r-full"
+                    : "text-gray-300 hover:bg-gray-800/40 hover:text-white"
                 }`}
               >
-                <span className="flex items-center gap-2">
-                  <Grid3X3 size={18} />
+                <span className="flex items-center gap-3">
+                  <Grid3X3 size={18} className="text-violet-400" />
                   My NFTs
                 </span>
               </Link>
 
-              <button
-                onClick={logOut}
-                className="w-full text-left block px-4 py-2 rounded-md text-base font-light uppercase text-sm tracking-wider text-gray-300 hover:bg-gray-800 hover:text-white transition duration-300"
-              >
-                <span className="flex items-center gap-2">
-                  <LogOut size={18} />
-                  Logout
-                </span>
-              </button>
+              <div className="pt-2 border-t border-gray-800/50">
+                <button
+                  onClick={async () => {
+                    const res = await logOut();
+                    if (res.status) {
+                      router.push("/");
+                    }
+                  }}
+                  className="w-full cursor-pointer text-left block px-4 py-3 rounded-md font-light uppercase text-sm tracking-wider text-gray-300 hover:bg-gray-800/40 hover:text-white transition duration-300"
+                >
+                  <span className="flex items-center gap-3">
+                    <LogOut size={18} className="text-rose-400" />
+                    Log Out
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         )}

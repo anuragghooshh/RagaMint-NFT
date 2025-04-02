@@ -227,3 +227,12 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@media (max-width: 768px) {
+  .Toastify__toast-container {
+    width: calc(100vw - 40px) !important;
+    left: 50% !important;
+    padding: 2px !important;
+    -webkit-transform: translate3d(-50%, 0, 0) !important;
+  }
+}

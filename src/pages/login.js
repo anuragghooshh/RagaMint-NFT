@@ -118,13 +118,12 @@ export default function Login() {
                 </>
               )}
             </Button>
-            <p className="text-gray-400 w-fit font-syncopate text-xs flex items-center gap-2 mx-auto ">
-              {" "}
-              Made with{" "}
+            <p className="text-gray-400 text-xs text-center flex flex-wrap items-center justify-center gap-1 mt-4">
+              Made with
               <span>
-                <HeartIcon size={14} className="text-red-500" />
-              </span>{" "}
-              by Anurag Ghosh{" "}
+                <HeartIcon size={12} className="text-red-500 inline-block" />
+              </span>
+              by Anurag Ghosh
             </p>
           </div>
         </div>
