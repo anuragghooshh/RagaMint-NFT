@@ -1,4 +1,3 @@
-import ConnectMetamaskWallet from "@/components/auth/ConnectMetamaskWallet";
 import { GradientButton } from "@/components/buttons/GradientButton";
 import RootLayout from "@/components/layout/RootLayout";
 import CropperUploader from "@/components/misc/CropperUploader";
@@ -16,34 +15,227 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCropImage } from "@/hooks/useCropImage";
-import { uploadImage } from "@/services/api/auth.service";
 import { createNFt } from "@/services/api/nft.service";
 import { mintNFT } from "@/services/blockchain-services/nft";
 import { getUser } from "@/services/firebase-services/cookies";
 import { connectMetamaskWallet } from "@/services/metamask-services/auth.service";
 import useMetamaskStore from "@/store/metaMaskStore";
 import { isValidUrl } from "@/utils/helper";
-import { showErrorMessage, showSuccessMessage } from "@/utils/toast";
-import { LucideTrash, Sparkles, Loader2, Link, Info } from "lucide-react";
+import { showErrorMessage } from "@/utils/toast";
+import {
+  LucideTrash,
+  Sparkles,
+  Loader2,
+  Link,
+  Info,
+  GemIcon,
+} from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import SuggestionButton from "@/components/buttons/SuggestionButton";
+import { Badge } from "@/components/ui/badge";
+import {
+  getImageCaptionUsingAI,
+  getImageDescriptionUsingAI,
+  getImageNameUsingAI,
+  predictNFTRarity,
+} from "@/services/api/ai.service";
+import RarityBadge from "@/components/misc/RarityBadge";
 
 export default function Home() {
   const [nftImage, setNftImage] = useState(null);
   const [minting, setMinting] = useState(false);
   const [isWalletConnected, setIsWalletConnected] = useState(false);
   const { signer } = useMetamaskStore();
+  const [aiSuggestionLoading, setAiSuggestionLoading] = useState({
+    name: false,
+    description: false,
+    category: false,
+  });
 
-  useEffect(() => {
-    setIsWalletConnected(!!signer);
-  }, [signer]);
+  const [rarityData, setRarityData] = useState(null);
+  const [rarityLoading, setRarityLoading] = useState(false);
+
+  const checkNFTRarity = async () => {
+    if (!nftImage || !watchedDescription) {
+      showErrorMessage("Please provide an image and description first");
+      return;
+    }
+
+    setRarityLoading(true);
+    try {
+      const readFileAsDataURL = () => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(nftImage);
+        });
+      };
+
+      const dataUrl = await readFileAsDataURL();
+      const base64Image = dataUrl.split(",")[1];
+
+      const captionData = await getImageCaptionUsingAI({
+        inputs: base64Image,
+        options: { use_cache: false },
+      });
+
+      const caption = captionData[0]?.generated_text || "";
+
+      const rarityResult = await predictNFTRarity({
+        caption: caption,
+        description: watchedDescription,
+      });
+
+      setRarityData(rarityResult);
+    } catch (error) {
+      console.error("Error checking rarity:", error);
+      showErrorMessage(error.message || "Failed to check NFT rarity");
+    } finally {
+      setRarityLoading(false);
+    }
+  };
+
+  const generateAiSuggestion = async (field) => {
+    if (!nftImage) {
+      showErrorMessage("Please upload an image first");
+      return;
+    }
+
+    setAiSuggestionLoading((prev) => ({ ...prev, [field]: true }));
+    setValue(field, "Generating...");
+
+    try {
+      const readFileAsDataURL = () => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(nftImage);
+        });
+      };
+
+      const dataUrl = await readFileAsDataURL();
+      const base64Image = dataUrl.split(",")[1];
+
+      const captionData = await getImageCaptionUsingAI({
+        inputs: base64Image,
+        options: { use_cache: false },
+      });
+      const caption = captionData[0]?.generated_text || "";
+      console.log("Caption generated:", caption);
+
+      if (field === "name") {
+        const nameData = await await getImageNameUsingAI({
+          inputs: `<s>[INST] Create a very short, 1-2 word artistic NFT name for this image description: "${caption}". Keep it short and catchy. Only respond with the name, nothing else. [/INST]`,
+          parameters: { max_new_tokens: 20, temperature: 0.7 },
+        });
+        let name = nameData[0]?.generated_text || "";
+
+        name = name.replace(/<s>\[INST\].*?\[\/INST\]\s*/gs, "").trim();
+
+        const quoteMatch = name.match(/"([^"]+)"/);
+        if (quoteMatch && quoteMatch[1]) {
+          name = quoteMatch[1].trim();
+        } else {
+          if (
+            name.startsWith('"') ||
+            name.startsWith('"') ||
+            name.startsWith("'")
+          ) {
+            name = name.substring(1);
+          }
+          if (name.endsWith('"') || name.endsWith('"') || name.endsWith("'")) {
+            name = name.substring(0, name.length - 1);
+          }
+        }
+
+        name = name.trim();
+
+        name = name.split(/[,.;:]|\n/)[0].trim();
+        if (name.split(" ").length > 3) {
+          name = name.split(" ").slice(0, 2).join(" ");
+        }
+
+        name = name
+          .split(" ")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ");
+
+        if (name.includes("(Note:")) {
+          name = name.split("(Note:")[0].trim();
+        }
+
+        setValue("name", name);
+      } else if (field === "description") {
+        const descData = await getImageDescriptionUsingAI({
+          inputs: `<s>[INST] Write a complete, artistic NFT description (2-3 complete sentences) for this image: "${caption}". Write from the perspective of an art collector. Be concise and creative. Only provide the description, nothing else. [/INST]`,
+          parameters: { max_new_tokens: 150, temperature: 0.7 },
+        });
+
+        let description = descData[0]?.generated_text || "";
+
+        description = description
+          .replace(/<s>\[INST\].*?\[\/INST\]\s*/gs, "")
+          .trim();
+
+        if (
+          description.startsWith('"') ||
+          description.startsWith('"') ||
+          description.startsWith("'")
+        ) {
+          description = description.substring(1);
+        }
+
+        if (
+          description.endsWith('"') ||
+          description.endsWith('"') ||
+          description.endsWith("'")
+        ) {
+          description = description.substring(0, description.length - 1);
+        }
+
+        description = description.trim();
+
+        const sentences = description.match(/[^.!?]+[.!?]+/g) || [];
+        if (sentences.length > 0) {
+          description = sentences
+            .slice(0, Math.min(3, sentences.length))
+            .join(" ")
+            .trim();
+        }
+
+        if (description.length < 40 && caption) {
+          description = `This NFT captures ${caption}. ${description}`;
+        }
+
+        setValue("description", description);
+      }
+
+      console.log(`AI suggestion for ${field} generated!`);
+    } catch (error) {
+      console.log(error);
+      showErrorMessage(error.message || "Failed to generate AI suggestion");
+      setValue(field, "");
+    } finally {
+      setAiSuggestionLoading((prev) => ({ ...prev, [field]: false }));
+    }
+  };
 
   const {
     register,
     handleSubmit,
     control,
     watch,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -112,6 +304,16 @@ export default function Home() {
     }
   };
 
+  useEffect(() => {
+    setIsWalletConnected(!!signer);
+  }, [signer]);
+
+  useEffect(() => {
+    if (rarityData) {
+      setRarityData(null);
+    }
+  }, [nftImage, watchedDescription, watchedCategory, watchedName]);
+
   return (
     <RootLayout>
       <>
@@ -119,13 +321,7 @@ export default function Home() {
           <div className="lg:grid lg:grid-cols-2 lg:gap-8">
             {/* NFT Preview Card */}
             <div className="mb-8 lg:mb-0 lg:max-w-md">
-              {/* <h2
-                
-                className="cursor-help text-3xl sm:text-4xl font-extralight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-500"
-              >
-                Raga<span className="font-bold">Mint</span>
-              </h2> */}
-              <div className="rounded-xl overflow-hidden shadow-2xl transition-all border border-gray-700 hover:border-purple-500/50 bg-gray-800/50">
+              <div className="rounded-xl relative overflow-hidden shadow-2xl transition-all border border-gray-700 hover:border-purple-500/50 bg-gray-800/50">
                 <div className="aspect-square relative overflow-hidden">
                   {nftImage ? (
                     <Image
@@ -145,7 +341,11 @@ export default function Home() {
                     </div>
                   )}
                 </div>
-                <div className="p-4">
+                <div className="p-4 relative w-full">
+                  {aiSuggestionLoading.name ||
+                  aiSuggestionLoading.description ? (
+                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-tr from-purple-500/20 to-blue-500/20 pointer-events-none animate-pulse" />
+                  ) : null}
                   <h3 className="text-lg font-semibold truncate">
                     {watchedName || "Untitled NFT"}
                   </h3>
@@ -159,6 +359,28 @@ export default function Home() {
                       </span>
                     </div>
                   )}
+                  <div className="mt-4 flex flex-row-reverse gap-4 flex-wrap justify-between items-center">
+                    <Button
+                      onClick={checkNFTRarity}
+                      disabled={
+                        rarityData ||
+                        rarityLoading ||
+                        !nftImage ||
+                        !watchedDescription
+                      }
+                      title="Check NFT Rarity"
+                      className="cursor-pointer bg-gray-800/50 text-gray-400 hover:bg-gray-700/50 rounded-lg px-4 py-2"
+                    >
+                      <GemIcon className="h-4 w-4" />
+                      {rarityLoading ? "Checking..." : "Check Rarity"}
+                    </Button>
+                    {rarityData && (
+                      <RarityBadge
+                        score={rarityData.score}
+                        reasons={rarityData.reasons}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -166,9 +388,39 @@ export default function Home() {
             {/* Creation Form */}
             <div>
               <div className="bg-gray-900/60 backdrop-blur-lg border border-gray-800 rounded-xl p-6 shadow-lg">
-                <h1 className="text-xl font-syncopate sm:text-2xl tracking-tight font-light mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-                  Add your <span className="font-bold">Metadata</span>
-                </h1>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6">
+                  <h1 className="text-xl font-syncopate sm:text-2xl tracking-tight font-light bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-violet-400 to-purple-600 flex flex-wrap items-center">
+                    Add your <span className="font-bold mx-1">Metadata</span>
+                  </h1>
+                  <div className="mt-2 sm:mt-0 flex items-center space-x-1">
+                    <Badge className="bg-gray-800/50 text-gray-400">
+                      <Sparkles className="h-3 w-3 text-purple-300" />
+                      <span className="whitespace-nowrap">AI-Powered</span>
+                    </Badge>
+                    <TooltipProvider delayDuration={300}>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-6 w-6 rounded-full"
+                          >
+                            <Info className="h-3.5 w-3.5 text-gray-400" />
+                            <span className="sr-only">
+                              About AI-powered features
+                            </span>
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent side="top" className="max-w-xs">
+                          <p>
+                            Generate NFT name and description automatically
+                            using AI and your uploaded image
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                </div>
                 {isWalletConnected && <WalletInfo />}
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="space-y-6">
@@ -231,18 +483,46 @@ export default function Home() {
 
                     {/* NFT Name */}
                     <div className="space-y-2">
-                      <Label className="text-sm font-medium" htmlFor="name">
-                        NFT Name <span className="text-red-500">*</span>
-                      </Label>
-                      <Input
-                        {...register("name", {
-                          required: "NFT Name is required",
-                        })}
-                        className="bg-gray-800/50 border-gray-700 focus:border-purple-500 rounded-lg focus:outline-none"
-                        id="name"
-                        placeholder="Name your NFT"
-                        disabled={minting}
-                      />
+                      <div className="flex justify-between items-center">
+                        <Label className="text-sm font-medium" htmlFor="name">
+                          NFT Name <span className="text-red-500">*</span>
+                        </Label>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <div>
+                                <SuggestionButton
+                                  onClick={() => generateAiSuggestion("name")}
+                                  loading={aiSuggestionLoading.name}
+                                  disabled={!nftImage || minting}
+                                />
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>
+                                Generate AI name suggestion based on your image
+                              </p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </div>
+                      <div className="relative">
+                        {aiSuggestionLoading.name && (
+                          <div
+                            title="Generating AI name"
+                            className="absolute inset-y-0 left-0 w-full h-full bg-gradient-to-tr from-purple-500/20 to-blue-500/20 rounded-lg pointer-events-auto cursor-not-allowed z-[+1] animate-pulse"
+                          />
+                        )}
+                        <Input
+                          {...register("name", {
+                            required: "NFT Name is required",
+                          })}
+                          className={`bg-gray-800/50 border-0 focus:!ring-purple-500/20 rounded-lg focus:outline-none`}
+                          id="name"
+                          placeholder="Name your NFT"
+                          disabled={minting || aiSuggestionLoading.name}
+                        />
+                      </div>
                       {errors.name && (
                         <p className="text-red-500 text-xs">
                           {errors.name.message}
@@ -252,21 +532,50 @@ export default function Home() {
 
                     {/* NFT Description */}
                     <div className="space-y-2">
-                      <Label
-                        className="text-sm font-medium"
-                        htmlFor="description"
-                      >
-                        NFT Description <span className="text-red-500">*</span>
-                      </Label>
-                      <Textarea
-                        className="bg-gray-800/50 border-gray-700 focus:border-purple-500 rounded-lg resize-none min-h-[100px] focus:outline-none"
-                        id="description"
-                        placeholder="Describe your NFT"
-                        {...register("description", {
-                          required: "NFT Description is required",
-                        })}
-                        disabled={minting}
-                      />
+                      <div className="flex justify-between items-center">
+                        <Label
+                          className="text-sm font-medium"
+                          htmlFor="description"
+                        >
+                          NFT Description{" "}
+                          <span className="text-red-500">*</span>
+                        </Label>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <div>
+                                <SuggestionButton
+                                  onClick={() =>
+                                    generateAiSuggestion("description")
+                                  }
+                                  loading={aiSuggestionLoading.description}
+                                  disabled={!nftImage || minting}
+                                />
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Generate AI description based on your image</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </div>
+                      <div className="relative">
+                        {aiSuggestionLoading.description && (
+                          <div
+                            title="Generating AI Description"
+                            className="absolute inset-y-0 left-0 w-full h-full bg-gradient-to-tr from-purple-500/20 to-blue-500/20 rounded-lg pointer-events-auto cursor-not-allowed z-[+1] animate-pulse"
+                          />
+                        )}
+                        <Textarea
+                          className="bg-gray-800/50 border-0 focus:!ring-purple-500/20 rounded-lg resize-none min-h-[100px] focus:outline-none"
+                          id="description"
+                          placeholder="Describe your NFT"
+                          {...register("description", {
+                            required: "NFT Description is required",
+                          })}
+                          disabled={minting || aiSuggestionLoading.description}
+                        />
+                      </div>
                       {errors.description && (
                         <p className="text-red-500 text-xs">
                           {errors.description.message}
@@ -377,7 +686,7 @@ export default function Home() {
                           <Link className="h-4 w-4 text-gray-400" />
                         </div>
                         <Input
-                          className="bg-gray-800/50 border-gray-700 focus:border-purple-500 rounded-lg pl-10 focus:outline-none"
+                          className="bg-gray-800/50 border-0 focus:!ring-purple-500/20 rounded-lg pl-10 focus:outline-none"
                           id="external_url"
                           placeholder="https://example.com"
                           {...register("external_url", {
