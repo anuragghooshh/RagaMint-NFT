@@ -76,11 +76,11 @@ export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-950 to-gray-900 px-4">
       <div className="w-full max-w-md">
-        <div className="backdrop-blur-lg bg-gray-900/60 border border-gray-800 rounded-xl p-8 shadow-2xl transition-all hover:border-purple-500/30">
+        <div className="backdrop-blur-lg bg-gray-900/60 border border-gray-800 rounded-xl p-8 shadow-2xl transition-all hover:border-teal-500/30">
           <div className="text-center mb-8">
             <h1 className="text-sm md:text-base font-light tracking-tight mb-2 text-gray-400">
               Welcome to{" "}
-              <span className="text-2xl sm:text-3xl font-syncopate block bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
+              <span className="text-2xl sm:text-3xl font-syncopate block bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-teal-600">
                 Raga<span className="font-bold">Mint</span>
               </span>
             </h1>
@@ -93,7 +93,7 @@ export default function Login() {
             <div className="aspect-square relative overflow-hidden rounded-xl mb-6">
               <div className="h-full w-full flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
                 <div className="text-center p-4">
-                  <Sparkles className="h-16 w-16 mx-auto mb-4 text-purple-500/50" />
+                  <Sparkles className="h-16 w-16 mx-auto mb-4 text-teal-500/50" />
                   <p className="text-gray-300 text-lg font-light">
                     NFT Deployment Platform
                   </p>
@@ -107,7 +107,7 @@ export default function Login() {
             <Button
               onClick={handleGoogleSignIn}
               disabled={loading}
-              className="w-full cursor-pointer group h-12 flex items-center justify-center gap-3 bg-violet-400/20 hover:bg-violet-400/70 text-white border border-violet-400/50 rounded-lg transition-all duration-300"
+              className="w-full cursor-pointer group h-12 flex items-center justify-center gap-3 bg-yellow-400/20 hover:bg-yellow-400/70 text-white border border-yellow-400/50 rounded-lg transition-all duration-300"
             >
               {loading ? (
                 <Loader2 className="h-5 w-5 animate-spin" />

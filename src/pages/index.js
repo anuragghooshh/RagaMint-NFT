@@ -321,7 +321,7 @@ export default function Home() {
           <div className="lg:grid lg:grid-cols-2 lg:gap-8">
             {/* NFT Preview Card */}
             <div className="mb-8 lg:mb-0 lg:max-w-md">
-              <div className="rounded-xl relative overflow-hidden shadow-2xl transition-all border border-gray-700 hover:border-purple-500/50 bg-gray-800/50">
+              <div className="rounded-xl relative overflow-hidden shadow-2xl transition-all border border-gray-700 hover:border-teal-500/50 bg-gray-800/50">
                 <div className="aspect-square relative overflow-hidden">
                   {nftImage ? (
                     <Image
@@ -344,7 +344,7 @@ export default function Home() {
                 <div className="p-4 relative w-full">
                   {aiSuggestionLoading.name ||
                   aiSuggestionLoading.description ? (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-tr from-purple-500/20 to-blue-500/20 pointer-events-none animate-pulse" />
+                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-tr from-teal-500/20 to-yellow-500/20 pointer-events-none animate-pulse" />
                   ) : null}
                   <h3 className="text-lg font-semibold truncate">
                     {watchedName || "Untitled NFT"}
@@ -354,7 +354,7 @@ export default function Home() {
                   </p>
                   {watchedCategory && (
                     <div className="mt-2">
-                      <span className="text-xs bg-purple-900/50 text-purple-300 px-2 py-1 rounded-full">
+                      <span className="text-xs bg-teal-900/50 text-teal-300 px-2 py-1 rounded-full">
                         {watchedCategory}
                       </span>
                     </div>
@@ -389,12 +389,12 @@ export default function Home() {
             <div>
               <div className="bg-gray-900/60 backdrop-blur-lg border border-gray-800 rounded-xl p-6 shadow-lg">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6">
-                  <h1 className="text-xl font-syncopate sm:text-2xl tracking-tight font-light bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-violet-400 to-purple-600 flex flex-wrap items-center">
+                  <h1 className="text-xl font-syncopate sm:text-2xl tracking-tight font-light bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-yellow-400  flex flex-wrap items-center">
                     Add your <span className="font-bold mx-1">Metadata</span>
                   </h1>
                   <div className="mt-2 sm:mt-0 flex items-center space-x-1">
                     <Badge className="bg-gray-800/50 text-gray-400">
-                      <Sparkles className="h-3 w-3 text-purple-300" />
+                      <Sparkles className="h-3 w-3 text-teal-300" />
                       <span className="whitespace-nowrap">AI-Powered</span>
                     </Badge>
                     <TooltipProvider delayDuration={300}>
@@ -510,14 +510,14 @@ export default function Home() {
                         {aiSuggestionLoading.name && (
                           <div
                             title="Generating AI name"
-                            className="absolute inset-y-0 left-0 w-full h-full bg-gradient-to-tr from-purple-500/20 to-blue-500/20 rounded-lg pointer-events-auto cursor-not-allowed z-[+1] animate-pulse"
+                            className="absolute inset-y-0 left-0 w-full h-full bg-gradient-to-tr from-teal-500/20 to-yellow-500/20 rounded-lg pointer-events-auto cursor-not-allowed z-[+1] animate-pulse"
                           />
                         )}
                         <Input
                           {...register("name", {
                             required: "NFT Name is required",
                           })}
-                          className={`bg-gray-800/50 border-0 focus:!ring-purple-500/20 rounded-lg focus:outline-none`}
+                          className={`bg-gray-800/50 border-0 focus:!ring-teal-500/20 rounded-lg focus:outline-none`}
                           id="name"
                           placeholder="Name your NFT"
                           disabled={minting || aiSuggestionLoading.name}
@@ -563,11 +563,11 @@ export default function Home() {
                         {aiSuggestionLoading.description && (
                           <div
                             title="Generating AI Description"
-                            className="absolute inset-y-0 left-0 w-full h-full bg-gradient-to-tr from-purple-500/20 to-blue-500/20 rounded-lg pointer-events-auto cursor-not-allowed z-[+1] animate-pulse"
+                            className="absolute inset-y-0 left-0 w-full h-full bg-gradient-to-tr from-teal-500/20 to-yellow-500/20 rounded-lg pointer-events-auto cursor-not-allowed z-[+1] animate-pulse"
                           />
                         )}
                         <Textarea
-                          className="bg-gray-800/50 border-0 focus:!ring-purple-500/20 rounded-lg resize-none min-h-[100px] focus:outline-none"
+                          className="bg-gray-800/50 border-0 focus:!ring-teal-500/20 rounded-lg resize-none min-h-[100px] focus:outline-none"
                           id="description"
                           placeholder="Describe your NFT"
                           {...register("description", {
@@ -598,7 +598,7 @@ export default function Home() {
                             defaultValue={field.value}
                             disabled={minting}
                           >
-                            <SelectTrigger className="w-full bg-gray-800/50 border-gray-700 focus:border-purple-500 rounded-lg">
+                            <SelectTrigger className="w-full bg-gray-800/50 border-gray-700 focus:border-teal-500 rounded-lg">
                               <SelectValue placeholder="Select Category" />
                             </SelectTrigger>
                             <SelectContent className="bg-gray-900 border-gray-700">
@@ -686,7 +686,7 @@ export default function Home() {
                           <Link className="h-4 w-4 text-gray-400" />
                         </div>
                         <Input
-                          className="bg-gray-800/50 border-0 focus:!ring-purple-500/20 rounded-lg pl-10 focus:outline-none"
+                          className="bg-gray-800/50 border-0 focus:!ring-teal-500/20 rounded-lg pl-10 focus:outline-none"
                           id="external_url"
                           placeholder="https://example.com"
                           {...register("external_url", {

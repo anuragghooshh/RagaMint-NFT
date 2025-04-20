@@ -40,7 +40,7 @@ export default function MyNFTs() {
         <div className="container mx-auto px-4 py-8">
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
-            <h1 className="text-2xl sm:text-3xl font-syncopate font-light bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-500 mb-4 sm:mb-0">
+            <h1 className="text-xl sm:text-2xl font-syncopate font-light text-yellow-500 mb-4 sm:mb-0">
               My <span className="font-bold">Collection</span>
             </h1>
             <Link href="/">
@@ -79,18 +79,18 @@ export default function MyNFTs() {
               ))}
             </div>
           ) : nfts.length === 0 ? (
-            <div className="rounded-xl overflow-hidden border border-gray-800 hover:border-purple-500/30 bg-gray-900/60 backdrop-blur-lg shadow-2xl transition-all duration-300 p-10 text-center my-12 max-w-md mx-auto">
+            <div className="rounded-xl overflow-hidden border border-gray-800 hover:border-teal-500/30 bg-gray-900/60 backdrop-blur-lg shadow-2xl transition-all duration-300 p-10 text-center my-12 max-w-md mx-auto">
               <div className="mb-8">
                 <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center mb-6 p-1 group hover:scale-105 transition-all duration-300">
                   <div className="w-full h-full rounded-full bg-gray-900 flex items-center justify-center">
                     <Plus
                       size={32}
-                      className="text-purple-400 group-hover:rotate-90 transition-transform duration-500 ease-out"
+                      className="text-teal-400 group-hover:rotate-90 transition-transform duration-500 ease-out"
                     />
                   </div>
                 </div>
 
-                <h2 className="text-2xl font-light mb-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
+                <h2 className="text-2xl font-light mb-3 bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-teal-600">
                   Your Collection is <span className="font-bold">Empty</span>
                 </h2>
                 <p className="text-gray-400 max-w-xs mx-auto mb-2">

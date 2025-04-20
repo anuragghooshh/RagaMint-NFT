@@ -29,10 +29,10 @@ const NFTCard = ({ nft }) => {
         </p>
 
         <div className="my-3 flex flex-wrap gap-2">
-          <span className="text-xs font-medium bg-purple-900/50 text-purple-300 px-2 py-1 rounded-full">
+          <span className="text-xs font-medium bg-teal-900/50 text-teal-300 px-2 py-1 rounded-full">
             {nft.category}
           </span>
-          <span className="text-xs font-medium bg-blue-900/50 text-blue-300 px-2 py-1 rounded-full">
+          <span className="text-xs font-medium bg-yellow-900/50 text-yellow-300 px-2 py-1 rounded-full">
             #{nft.tokenId}
           </span>
         </div>
@@ -43,7 +43,7 @@ const NFTCard = ({ nft }) => {
             target="_blank"
             rel="noopener noreferrer"
             title="View Transaction"
-            className="flex items-center gap-1 text-blue-400 hover:text-blue-300 transition-colors"
+            className="flex items-center gap-1 text-yellow-400 hover:text-yellow-300 transition-colors"
           >
             <ArrowUpRight size={10} />
             Transaction
@@ -54,7 +54,7 @@ const NFTCard = ({ nft }) => {
             target="_blank"
             rel="noopener noreferrer"
             title="View on OpenSea"
-            className="flex items-center gap-1 text-blue-400 hover:text-blue-300 transition-colors"
+            className="flex items-center gap-1 text-yellow-400 hover:text-yellow-300 transition-colors"
           >
             <ArrowUpRight size={10} />
             OpenSea

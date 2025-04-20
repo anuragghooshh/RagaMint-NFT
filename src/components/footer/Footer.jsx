@@ -6,11 +6,11 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full mt-20 border-t border-purple-500/10 bg-violet-400/10 backdrop-blur-sm pt-10 pb-8 relative z-30">
+    <footer className="w-full mt-20 border-t border-teal-500/10 bg-teal-400/10 backdrop-blur-sm pt-10 pb-8 relative z-30">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
-            <h3 className="text-xl font-syncopate bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-500 mb-3">
+            <h3 className="text-xl font-syncopate text-yellow-500 mb-3">
               Raga<span className="font-bold">Mint</span>
             </h3>
             <p className="text-gray-400 text-sm leading-relaxed mb-4">
@@ -23,7 +23,7 @@ const Footer = () => {
                 href="https://github.com/anuragghooshh"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-purple-400 transition-colors"
+                className="text-gray-400 hover:text-teal-400 transition-colors"
               >
                 <Github size={18} />
               </Link>
@@ -32,14 +32,14 @@ const Footer = () => {
                 href="https://www.linkedin.com/in/anuragghoshh/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-purple-400 transition-colors"
+                className="text-gray-400 hover:text-teal-400 transition-colors"
               >
                 <Linkedin size={18} />
               </Link>
               <Link
                 title="Email"
                 href="mailto:anuragghosh66@gmail.com"
-                className="text-gray-400 hover:text-purple-400 transition-colors"
+                className="text-gray-400 hover:text-teal-400 transition-colors"
               >
                 <Mail size={18} />
               </Link>
@@ -53,7 +53,7 @@ const Footer = () => {
               <li>
                 <Link
                   href="/"
-                  className="text-gray-400 hover:text-purple-400 text-sm transition-colors"
+                  className="text-gray-400 hover:text-teal-400 text-sm transition-colors"
                 >
                   Create NFT
                 </Link>
@@ -61,7 +61,7 @@ const Footer = () => {
               <li>
                 <Link
                   href="/nfts"
-                  className="text-gray-400 hover:text-purple-400 text-sm transition-colors"
+                  className="text-gray-400 hover:text-teal-400 text-sm transition-colors"
                 >
                   My Collection
                 </Link>
@@ -71,7 +71,7 @@ const Footer = () => {
                   href="https://ethereum.org/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-purple-400 text-sm transition-colors"
+                  className="text-gray-400 hover:text-teal-400 text-sm transition-colors"
                 >
                   Learn about Ethereum
                 </a>
@@ -103,7 +103,7 @@ const Footer = () => {
               </li>
             </ul>
             <div className="flex items-center mt-4 space-x-2">
-              <Code size={14} className="text-purple-400" />
+              <Code size={14} className="text-teal-400" />
               <span className="text-xs text-gray-400">
                 Major Project (NTCC) - 2025
               </span>
@@ -127,7 +127,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-0 left-0 h-[1px] w-full bg-gradient-to-r from-transparent via-purple-500/30 to-transparent"></div>
+      <div className="absolute bottom-0 left-0 h-[1px] w-full bg-gradient-to-r from-transparent via-teal-500/30 to-transparent"></div>
     </footer>
   );
 };

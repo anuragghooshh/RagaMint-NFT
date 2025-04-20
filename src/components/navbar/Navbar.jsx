@@ -28,7 +28,7 @@ export default function Navbar() {
               href="/"
               className="flex items-center space-x-2"
             >
-              <h2 className="cursor-pointer text-2xl font-syncopate font-extralight bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-500">
+              <h2 className="cursor-pointer text-2xl font-syncopate font-extralight bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-yellow-500">
                 Raga<span className="font-bold">Mint</span>
               </h2>
             </Link>
@@ -39,7 +39,7 @@ export default function Navbar() {
                 href="/"
                 className={`px-4 py-2 rounded-md font-light uppercase text-sm tracking-wider  transition duration-300 relative ${
                   isActive("/")
-                    ? "text-violet-400 after:transition-all after:duration-200 after:ease-in-out hover:after:-translate-x-1 after:size-2 after:bg-violet-400 after:absolute after:rounded-full after:right-0 after:top-1/2 after:-translate-y-1/2 "
+                    ? "text-yellow-400 after:transition-all after:duration-200 after:ease-in-out hover:after:-translate-x-1 after:size-2 after:bg-yellow-400 after:absolute after:rounded-full after:right-0 after:top-1/2 after:-translate-y-1/2 "
                     : "text-gray-300 hover:bg-gray-800 hover:text-white"
                 }`}
               >
@@ -53,7 +53,7 @@ export default function Navbar() {
                 href="/nfts"
                 className={`px-4 py-2 rounded-md font-light uppercase text-sm tracking-wider  transition duration-300 relative ${
                   isActive("/nfts")
-                    ? "text-violet-400 after:transition-all after:duration-200 after:ease-in-out hover:after:-translate-x-1 after:size-2 after:bg-violet-400 after:absolute after:rounded-full after:right-0 after:top-1/2 after:-translate-y-1/2 "
+                    ? "text-yellow-400 after:transition-all after:duration-200 after:ease-in-out hover:after:-translate-x-1 after:size-2 after:bg-yellow-400 after:absolute after:rounded-full after:right-0 after:top-1/2 after:-translate-y-1/2 "
                     : "text-gray-300 hover:bg-gray-800 hover:text-white"
                 }`}
               >
@@ -106,12 +106,12 @@ export default function Navbar() {
                 href="/"
                 className={`block px-4 py-3 rounded-md font-light uppercase text-sm tracking-wider transition duration-300 relative ${
                   isActive("/")
-                    ? "text-violet-400 bg-violet-500/10 after:absolute after:left-0 after:top-1/2 after:-translate-y-1/2 after:h-1/2 after:w-0.5 after:bg-violet-400 after:rounded-r-full"
+                    ? "text-yellow-400 bg-yellow-500/10 after:absolute after:left-0 after:top-1/2 after:-translate-y-1/2 after:h-1/2 after:w-0.5 after:bg-yellow-400 after:rounded-r-full"
                     : "text-gray-300 hover:bg-gray-800/40 hover:text-white"
                 }`}
               >
                 <span className="flex items-center gap-3">
-                  <Sparkles size={18} className="text-violet-400" />
+                  <Sparkles size={18} className="text-yellow-400" />
                   Create NFT
                 </span>
               </Link>
@@ -120,12 +120,12 @@ export default function Navbar() {
                 href="/nfts"
                 className={`block px-4 py-3 rounded-md font-light uppercase text-sm tracking-wider transition duration-300 relative ${
                   isActive("/nfts")
-                    ? "text-violet-400 bg-violet-500/10 after:absolute after:left-0 after:top-1/2 after:-translate-y-1/2 after:h-1/2 after:w-0.5 after:bg-violet-400 after:rounded-r-full"
+                    ? "text-yellow-400 bg-yellow-500/10 after:absolute after:left-0 after:top-1/2 after:-translate-y-1/2 after:h-1/2 after:w-0.5 after:bg-yellow-400 after:rounded-r-full"
                     : "text-gray-300 hover:bg-gray-800/40 hover:text-white"
                 }`}
               >
                 <span className="flex items-center gap-3">
-                  <Grid3X3 size={18} className="text-violet-400" />
+                  <Grid3X3 size={18} className="text-yellow-400" />
                   My NFTs
                 </span>
               </Link>

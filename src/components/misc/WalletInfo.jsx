@@ -134,7 +134,7 @@ const WalletInfo = () => {
         </div>
         <Badge
           variant="outline"
-          className="bg-green-900/30 text-green-400 border-green-800 text-xs"
+          className="bg-yellow-900/30 text-yellow-400 border-yellow-800 text-xs"
         >
           Connected
         </Badge>
@@ -151,7 +151,7 @@ const WalletInfo = () => {
             title="Copy address"
           >
             {copied ? (
-              <Check size={16} className="text-green-400" />
+              <Check size={16} className="text-yellow-400" />
             ) : (
               <Copy size={16} />
             )}

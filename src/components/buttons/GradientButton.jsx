@@ -9,7 +9,7 @@ const GradientButton = React.forwardRef(
       className,
       variant = "default",
       size = "default",
-      theme = "purple",
+      theme = "teal",
       glitchOnHover = true,
       ...props
     },
@@ -27,27 +27,35 @@ const GradientButton = React.forwardRef(
     }, [isGlitching]);
 
     const themes = {
-      purple: {
+      teal: {
         bg: "bg-[#1a0b2e45]",
-        border: "border-purple-500/70",
-        text: "text-purple-300",
-        glow: "purple-500",
-        grid: "rgba(147, 51, 234, 0.5)",
-        rgbColor: "140, 82, 255",
+        border: "border-teal-500/70",
+        text: "text-teal-300",
+        glow: "teal-500",
+        grid: "rgba(20, 184, 166, 0.5)",
+        rgbColor: "20, 184, 166", 
       },
-      blue: {
+      yellow: {
+        bg: "bg-[#2e2a0b]",              
+        border: "border-yellow-500/70",
+        text: "text-yellow-300",
+        glow: "yellow-500",
+        grid: "rgba(234, 179, 8, 0.5)",   
+        rgbColor: "234, 179, 8",          
+      },
+      blue: {                             
         bg: "bg-[#0b1a2e]", 
-        border: "border-blue-500/70",
-        text: "text-blue-300",
-        glow: "blue-500",
+        border: "border-blue-500/70",     
+        text: "text-blue-300",            
+        glow: "blue-500",                 
         grid: "rgba(59, 130, 246, 0.5)",
         rgbColor: "59, 130, 246", 
       },
-      cyan: {
+      cyan: {                             
         bg: "bg-[#0b2e2e]", 
-        border: "border-cyan-500/70",
-        text: "text-cyan-300",
-        glow: "cyan-500",
+        border: "border-cyan-500/70",     
+        text: "text-cyan-300",            
+        glow: "cyan-500",                 
         grid: "rgba(6, 182, 212, 0.5)",
         rgbColor: "6, 182, 212", 
       },
@@ -61,7 +69,7 @@ const GradientButton = React.forwardRef(
       },
     };
 
-    const selectedTheme = themes[theme] || themes.purple;
+    const selectedTheme = themes[theme] || themes.teal;
 
     const handleGlitch = () => {
       if (glitchOnHover && !isGlitching) {

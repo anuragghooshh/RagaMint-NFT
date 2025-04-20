@@ -49,7 +49,7 @@ export default function CropperUploader({
     <Dialog open={isOpen} onOpenChange={onCancel}>
       <DialogContent className="max-w-[500px] h-fit border border-gray-700 bg-gray-900/80 backdrop-blur-lg rounded-xl shadow-lg">
         <DialogHeader>
-          <DialogTitle className="text-xl font-light tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
+          <DialogTitle className="text-xl font-light tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-teal-600">
             {title}
           </DialogTitle>
         </DialogHeader>
@@ -65,7 +65,7 @@ export default function CropperUploader({
                 classes={{
                   mediaClassName: "transition-transform ease-linear",
                   containerClassName:
-                    "absolute top-0 left-0 right-0 bottom-0 rounded-xl border-2 border-purple-400/20",
+                    "absolute top-0 left-0 right-0 bottom-0 rounded-xl border-2 border-teal-400/20",
                 }}
                 showGrid={true}
                 image={initialImage}
@@ -109,7 +109,7 @@ export default function CropperUploader({
                         width: "100%",
                         background: getTrackBackground({
                           values: [zoom],
-                          colors: ["#7e0eff", "#2a2a2a"],
+                          colors: ["#facc15", "#2a2a2a"], // Updated to match yellow theme
                           min: ZOOM_MIN,
                           max: ZOOM_MAX,
                         }),
@@ -125,7 +125,7 @@ export default function CropperUploader({
                     <div
                       key={key}
                       {...restProps}
-                      className="h-5 w-5 rounded-full outline-none flex justify-center items-center shadow-md bg-violet-400 ring-2 ring-[#6e6e6e53]"
+                      className="h-5 w-5 rounded-full outline-none flex justify-center items-center shadow-md bg-yellow-400 ring-2 ring-yellow-300/50"
                     />
                   );
                 }}
@@ -155,7 +155,11 @@ export default function CropperUploader({
           >
             Cancel
           </Button>
-          <Button title="Save" onClick={handleDone} className="cursor-pointer bg-violet-400/20 hover:bg-violet-400/70 text-white border border-violet-400/50">
+          <Button
+            title="Save"
+            onClick={handleDone}
+            className="cursor-pointer bg-yellow-400/20 hover:bg-yellow-400/70 text-white border border-yellow-400/50"
+          >
             Save
           </Button>
         </DialogFooter>

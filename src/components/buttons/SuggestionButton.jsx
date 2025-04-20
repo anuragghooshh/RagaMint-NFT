@@ -7,7 +7,7 @@ const SuggestionButton = ({ onClick, loading, disabled }) => {
       onClick={onClick}
       size="sm"
       variant="ghost"
-      className="h-8 px-2 text-xs text-purple-400 hover:text-purple-300 hover:bg-purple-900/30"
+      className="h-8 px-2 text-xs text-teal-400 hover:text-teal-300 hover:bg-teal-900/30"
       disabled={loading || disabled}
     >
       {loading ? (
