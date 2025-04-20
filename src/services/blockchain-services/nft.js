@@ -90,6 +90,18 @@ export const mintNFT = async (metadata) => {
   try {
     const signer = await connectMetamaskWallet();
 
+    const balance = await signer.getBalance();
+    const formattedBalance = ethers.utils.formatEther(balance);
+
+    console.log("Formatted balance:", formattedBalance);
+
+    if (parseFloat(formattedBalance) < 0.01) {
+      return {
+        status: false,
+        message: "Insufficient funds in your wallet.",
+      };
+    }
+
     const accounts = await window.ethereum.request({
       method: "eth_requestAccounts",
     });

@@ -178,6 +178,16 @@ const WalletInfo = () => {
           <p className="text-sm font-medium">{walletInfo.network}</p>
         </div>
       </div>
+
+      {/* <p className="text-xs text-gray-400">
+        * Minimum requirement of 0.01 ETH in your wallet for minting
+      </p> */}
+
+      {walletInfo.balance < 0.01 ? (
+        <p className="text-xs text-red-400 mt-4">
+          * Minimum requirement of 0.01 ETH in your wallet for minting
+        </p>
+      ) : null}
     </div>
   );
 };
